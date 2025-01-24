@@ -1,7 +1,7 @@
 #include "UniqPtr.hpp"
 #include <gtest/gtest.h>
 
-int main(int argv, char** argc){
+int main(int argc, char** argv){
     // Initialize Google Test framework
     ::testing::InitGoogleTest(&argc, argv);
 

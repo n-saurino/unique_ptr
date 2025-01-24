@@ -1,29 +1,52 @@
 #pragma once
 #include <iostream>
-#include "ControlBlock.hpp"
 
 template<typename T>
 class UniqPtr
 {
 private:
-    ControlBlock* pcb_{};
+    T* ptr_{}; 
 
 public:
-    UniqPtr(T* raw_ptr): pcb{raw_ptr ? new ControlBlock<T>{raw_ptr} : 
-                             nullptr}{
+    explicit UniqPtr(T* raw_ptr): ptr_{raw_ptr}{
         
     }
 
     ~UniqPtr(){
         // needs to delete the free store control block
-        delete pcb;
+        delete ptr_;
     }
 
-    UniqPtr& operator*(){
+    // deleting the copy constructor and copy assignment operator
+    UniqPtr(const UniqPtr& other) = delete;
+    UniqPtr& operator=(const UniqPtr& other) = delete;
+
+    // move constructor
+    UniqPtr(UniqPtr&& other) noexcept: ptr_{other.ptr_}{
+        other.ptr_ = nullptr;
+    }
+
+    // move assignment operator
+    UniqPtr& operator=(UniqPtr&& other) noexcept{
+        if(this == &other){
+            return *this;
+        }
+        delete ptr_;
+        ptr_ = other.ptr_;
+        other.ptr_ = nullptr;
+
         return *this;
     }
+
+    T& operator*() const{
+        return *ptr_;
+    }
     
-    UniqPtr* operator->(){
-        return this;
+    T* operator->() const{
+        return ptr_;
+    }
+
+    T* get() const{
+        return ptr_;
     }
 };
