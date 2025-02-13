@@ -25,43 +25,7 @@ Implement a custom smart pointer class `MyUniquePtr` that mimics the core functi
 - Accept custom deleter during construction
 - Use custom deleter for resource cleanup
 - Support both function pointers and functors
-
-## Interface
-
-```cpp
-template<typename T, typename Deleter = std::default_delete<T>>
-class MyUniquePtr {
-public:
-    // Constructors
-    explicit MyUniquePtr(T* ptr = nullptr);
-    MyUniquePtr(T* ptr, Deleter d);
-    
-    // Move semantics
-    MyUniquePtr(MyUniquePtr&& other) noexcept;
-    MyUniquePtr& operator=(MyUniquePtr&& other) noexcept;
-    
-    // Disable copy operations
-    MyUniquePtr(const MyUniquePtr&) = delete;
-    MyUniquePtr& operator=(const MyUniquePtr&) = delete;
-    
-    // Destructor
-    ~MyUniquePtr();
-    
-    // Operators
-    T& operator*() const;
-    T* operator->() const;
-    
-    // Utility functions
-    T* get() const;
-    T* release();
-    void reset(T* ptr = nullptr);
-    
-private:
-    T* ptr_;
-    Deleter deleter_;
-};
-```
-
+- 
 ## Example Usage
 
 ```cpp
