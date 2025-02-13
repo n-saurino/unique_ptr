@@ -1,4 +1,4 @@
-# MyUniquePtr Implementation Challenge
+# Implement Unique Pointer
 
 ## Problem Description
 
